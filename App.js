@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, KeyboardAvoidingView,TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView,TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import Task from './components/Task';
 
 export default function App() {
@@ -8,18 +8,28 @@ export default function App() {
   const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
+    Keyboard.dismiss();
     if(task.trim() !== '') {
-    setTaskItems([...taskItems, task]);
-    setTask('');
+      setTaskItems([...taskItems, task]);
+      setTask('');
     }
   }
+
+  const handleDeleteTask = (index) => {
+    const newTaskItems = [...taskItems];
+    newTaskItems.splice(index, 1);
+    setTaskItems(newTaskItems);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.taskWrapper}>
         <Text style={styles.sectionTitle}>Tarefas do Dia</Text>
         <View style={styles.items}>
           {taskItems.map((item, index) => (
-            <Task key={index} text={item} />
+            <TouchableOpacity key={index} onPress={() => handleDeleteTask(index)}>
+              <Task text={item} />
+            </TouchableOpacity>
           ))}
         </View>
       </View>
