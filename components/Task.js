@@ -23,9 +23,8 @@ const Task = (props) => {
         <Text style={styles.itemText}>{props.text}</Text>
       </View>
       <View style={styles.itemRight}>
-        <Icon name="edit" size={26} color="#55BCF6"/>      
         <TouchableOpacity onPress={() => props.delete(props.index)}>
-          <Icon name="delete" size={26} color="red" style={styles.icon2}/>
+          <Icon name="delete" size={26} color="red"/>
         </TouchableOpacity>
       </View>
     </View>
@@ -46,7 +45,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
-    margin: 0,
   },
   square: {
     width: 24,
@@ -59,14 +57,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemText: {
-    maxWidth: '70%',
+    maxWidth: '78%',
   },
   itemRight: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  icon2: {
-    marginLeft: 15,
   },
 })
 
