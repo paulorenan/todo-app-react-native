@@ -1,15 +1,32 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const Task = (props) => {
+  const [click, setClick] = useState(false);
+  const [icon, setIcon] = useState('');
+
+  useEffect(() => {
+    if(click) {
+      setIcon('check');
+    } else {
+      setIcon('');
+    }
+  }, [click]);
+
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
-        <View style={styles.square} />
+        <TouchableOpacity style={styles.square} onPress={() => setClick(!click)}>
+          <Icon name={icon} size={20} color="green" />
+        </TouchableOpacity>
         <Text style={styles.itemText}>{props.text}</Text>
       </View>
-      <View style={styles.circular}>
-
+      <View style={styles.itemRight}>
+        <Icon name="edit" size={26} color="#55BCF6"/>      
+        <TouchableOpacity onPress={() => props.delete(props.index)}>
+          <Icon name="delete" size={26} color="red" style={styles.icon2}/>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -29,6 +46,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    margin: 0,
   },
   square: {
     width: 24,
@@ -37,16 +55,18 @@ const styles = StyleSheet.create({
     opacity: 0.4,
     borderRadius: 5,
     marginRight: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   itemText: {
-    maxWidth: '80%',
+    maxWidth: '70%',
   },
-  circular: {
-    width: 12,
-    height: 12,
-    borderColor: '#55BCF6',
-    borderWidth: 2,
-    borderRadius: 5,
+  itemRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon2: {
+    marginLeft: 15,
   },
 })
 

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, KeyboardAvoidingView,TextInput, TouchableOpacity, Keyboard } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Task from './components/Task';
 
 export default function App() {
@@ -8,9 +9,9 @@ export default function App() {
   const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
-    Keyboard.dismiss();
     if(task.trim() !== '') {
-      setTaskItems([...taskItems, task]);
+      Keyboard.dismiss();
+      setTaskItems([...taskItems, task.trim()]);
       setTask('');
     }
   }
@@ -27,9 +28,9 @@ export default function App() {
         <Text style={styles.sectionTitle}>Tarefas do Dia</Text>
         <View style={styles.items}>
           {taskItems.map((item, index) => (
-            <TouchableOpacity key={index} onPress={() => handleDeleteTask(index)}>
-              <Task text={item} />
-            </TouchableOpacity>
+            <View key={index}>
+              <Task text={item} delete={handleDeleteTask} index={index}/>
+            </View>
           ))}
         </View>
       </View>
